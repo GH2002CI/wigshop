@@ -13,7 +13,7 @@ class dataadmin
     function inProduct($name, $image, $price, $color, $category, $time, $deception)
     {
         global $conn;
-        $sql = "INSERT INTO product (name, image, price, color, category, date, deception) values ('$name', '$image', '$price', '$color', '$category', '$time', '$deception')";
+        $sql = "INSERT INTO product (name, image, price, color, category, date, infomation) values ('$name', '$image', '$price', '$color', '$category', '$time', '$deception')";
         $run = mysqli_query($conn, $sql);
         return $run;
     }

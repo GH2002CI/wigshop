@@ -35,92 +35,7 @@
     session_start();
     ?>
     <!-- Topbar Start -->
-    <div class="container-fluid">
-        <div class="row bg-secondary py-1 px-xl-5">
-            <div class="col-lg-6 d-none d-lg-block">
-                <div class="d-inline-flex align-items-center h-100">
-                    <a class="text-body mr-3" href="">About</a>
-                    <a class="text-body mr-3" href="">Contact</a>
-                    <a class="text-body mr-3" href="">Help</a>
-                    <a class="text-body mr-3" href="">FAQs</a>
-                </div>
-            </div>
-            <div class="col-lg-6 text-center text-lg-right">
-                <div class="d-inline-flex align-items-center">
-                    <div class="btn-group">
-                        <div class="btn btn-sm btn-light menudrop">
-                            My Account
-                            <div class="menudrop-content">
-                                <?php
-                                if (isset($_SESSION['idUser'])) {
-                                    echo '<a class="dropdown-item" href="logout.php" style="text-decoration:none;">Log out</a>';
-                                } else {
-                                    echo '<a class="dropdown-item" href="login.php" style="text-decoration:none;">Sign in</a>';
-                                    echo '<a class="dropdown-item" href="register.php" style="text-decoration:none;">Sign up</a>';
-                                }
-                                
-                                ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="btn-group mx-2">
-                        <div class="btn btn-sm btn-light menudrop">USD
-                            <div class="menudrop-content">
-                                <button class="dropdown-item" type="button">EUR</button>
-                                <button class="dropdown-item" type="button">GBP</button>
-                                <button class="dropdown-item" type="button">CAD</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="btn-group">
-                        <div class="btn btn-sm btn-light menudrop">EN
-                            <div class="menudrop-content">
-                                <button class="dropdown-item" type="button">FR</button>
-                                <button class="dropdown-item" type="button">AR</button>
-                                <button class="dropdown-item" type="button">RU</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-inline-flex align-items-center d-block d-lg-none">
-                    <a href="" class="btn px-0 ml-2">
-                        <i class="fas fa-heart text-dark"></i>
-                        <span class="badge text-dark border border-dark rounded-circle"
-                            style="padding-bottom: 2px;">0</span>
-                    </a>
-                    <a href="" class="btn px-0 ml-2">
-                        <i class="fas fa-shopping-cart text-dark"></i>
-                        <span class="badge text-dark border border-dark rounded-circle"
-                            style="padding-bottom: 2px;">0</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
-            <div class="col-lg-4">
-                <a href="index.php" class="text-decoration-none">
-                    <span class="h1 text-uppercase text-primary bg-dark px-2">Multi</span>
-                    <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Shop</span>
-                </a>
-            </div>
-            <div class="col-lg-4 col-6 text-left">
-                <form action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
-                        <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
-                            </span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-lg-4 col-6 text-right">
-                <p class="m-0">Customer Service</p>
-                <h5 class="m-0">+012 345 6789</h5>
-            </div>
-        </div>
-    </div>
+    <?php include('topbar.php') ?>
     <!-- Topbar End -->
 
 
@@ -136,7 +51,7 @@
                 <nav class="breadcrumb bg-light mb-30">
                     <a class="breadcrumb-item text-dark" href="index.php">Home</a>
                     <a class="breadcrumb-item text-dark" href="#">Shop</a>
-                    <span class="breadcrumb-item active">Shop Detail</span>
+                    <span class="breadcrumb-item active">Detail</span>
                 </nav>
             </div>
         </div>
@@ -180,8 +95,8 @@
                         </div>
                         <small class="pt-1">(<?php echo $getpro['number_sell'] ?>)</small>
                     </div>
-                    <h3 class="font-weight-semi-bold mb-4">VND<?php echo $getpro['price'] ?></h3>
-                    <p class="mb-4"><?php echo $getpro['deception'] ?></p>
+                    <h3 class="font-weight-semi-bold mb-4"><?php echo $getpro['price'] ?> VND</h3>
+                    <p class="mb-4">Color: <?php echo $getpro['color'] ?></p>
                     <form action="" method="post">
                         <div class="d-flex mb-4">
 
@@ -193,7 +108,7 @@
                                 <button type="submit" name="add_to_cart" class="btn btn-primary px-3">
                                     <i class="fa fa-shopping-cart mr-1"></i> Cart
                                 </button>
-                                <button type="submit" name="buy" class="btn btn-primary px-3">
+                                <button type="submit" name="buy" class="btn btn-primary px-3" style="margin-left: 10px;">
                                     <i class="fa fa-shopping-cart mr-1"></i> Buy
                                 </button>
                                 <?php
@@ -213,7 +128,7 @@
 
                         if (isset($_SESSION['idUser'])) {
 
-                            $incrart = $getdata->incart($_SESSION['idUser'], $idProduct, $size, $color, $quantity);
+                            $incrart = $getdata->incart($_SESSION['idUser'], $idProduct);
                             ob_start();
 
                             if ($incrart) {
@@ -246,143 +161,146 @@
                         <div>
                             <div class="nav-item text-dark">Information</div>
                             <div class="tab-pane tab-content">
-                                <?php echo $getpro['deception'] ?>
+                                <?php echo $getpro['infomation'] ?>
                             </div>
                         </div>
-                        <div>
-                            <?php
-                            $selectReview = $getdata->sereview($idProduct);
-                            $row = mysqli_num_rows($selectReview);
-                            ?>
-                            <div class="nav-item text-dark">
-                                Reviews (
-                                <?php echo $row ?>)
-                            </div>
-                            <div class="tab-pane tab-content">
-                                <div style="display: flex;">
-                                    <div class="col-md-6">
-                                        <h4 class="mb-4">
-                                            <?php echo $row ?> review for "
-                                            <?php echo $getpro['name'] ?>"
-                                        </h4>
-                                        <?php
-                                        //print review
-                                        foreach ($selectReview as $review) {
-                                            $getUser = $getdata->getuserbyid($review['idUser']);
-                                            $result = mysqli_fetch_assoc($getUser);
-                                            $star = $review['evaluate'];
-                                            ?>
-                                            <div class="media mb-4">
-                                                <img src="bs-advcance-admin/advance-admin/img/<?php echo $result['avatar'] ?>"
-                                                    alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                                                <div class="media-body">
-                                                    <h6>
-                                                        <?php echo $result['last_name'] ?><small> - <i>
-                                                                <?php echo $review['date'] ?>
-                                                            </i></small>
-                                                    </h6>
-                                                    <div class="text-primary mb-2">
-                                                        <?php
-                                                        switch ($star) {
-                                                            case 1:
-                                                                echo '  <i class="fas fa-star"></i>
+
+                    </div>
+                </div>
+                <div class="bg-light p-30" style="margin-top:  20px;">
+                    <div style="margin-top: 20px;">
+                        <?php
+                        $selectReview = $getdata->sereview($idProduct);
+                        $row = mysqli_num_rows($selectReview);
+                        ?>
+                        <div class="nav-item text-dark">
+                            Reviews (
+                            <?php echo $row ?>)
+                        </div>
+                        <div class="tab-pane tab-content">
+                            <div style="display: flex;">
+                                <div class="col-md-6">
+                                    <h4 class="mb-4">
+                                        <?php echo $row ?> review for "
+                                        <?php echo $getpro['name'] ?>"
+                                    </h4>
+                                    <?php
+                                    //print review
+                                    foreach ($selectReview as $review) {
+                                        $getUser = $getdata->getuserbyid($review['idUser']);
+                                        $result = mysqli_fetch_assoc($getUser);
+                                        $star = $review['evaluate'];
+                                        ?>
+                                        <div class="media mb-4">
+                                            <img src="bs-advcance-admin/advance-admin/img/<?php echo $result['avatar'] ?>"
+                                                alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                            <div class="media-body">
+                                                <h6>
+                                                    <?php echo $result['last_name'] ?><small> - <i>
+                                                            <?php echo $review['date'] ?>
+                                                        </i></small>
+                                                </h6>
+                                                <div class="text-primary mb-2">
+                                                    <?php
+                                                    switch ($star) {
+                                                        case 1:
+                                                            echo '  <i class="fas fa-star"></i>
                                                                     <i class="far fa-star"></i>
                                                                     <i class="far fa-star"></i>
                                                                     <i class="far fa-star"></i>
                                                                     <i class="far fa-star"></i>';
-                                                                break;
-                                                            case 2:
-                                                                echo '  <i class="fas fa-star"></i>
+                                                            break;
+                                                        case 2:
+                                                            echo '  <i class="fas fa-star"></i>
                                                                     <i class="fas fa-star"></i>
                                                                     <i class="far fa-star"></i>
                                                                     <i class="far fa-star"></i>
                                                                     <i class="far fa-star"></i>';
-                                                                break;
-                                                            case 3:
-                                                                echo '  <i class="fas fa-star"></i>
+                                                            break;
+                                                        case 3:
+                                                            echo '  <i class="fas fa-star"></i>
                                                                     <i class="fas fa-star"></i>
                                                                     <i class="fas fa-star"></i>
                                                                     <i class="far fa-star"></i>
                                                                     <i class="far fa-star"></i>';
-                                                                break;
-                                                            case 4:
-                                                                echo '  <i class="fas fa-star"></i>
+                                                            break;
+                                                        case 4:
+                                                            echo '  <i class="fas fa-star"></i>
                                                                     <i class="fas fa-star"></i>
                                                                     <i class="fas fa-star"></i>
                                                                     <i class="fas fa-star"></i>
                                                                     <i class="far fa-star"></i>';
-                                                                break;
-                                                            case 5:
-                                                                echo '  <i class="fas fa-star"></i>
+                                                            break;
+                                                        case 5:
+                                                            echo '  <i class="fas fa-star"></i>
                                                                     <i class="fas fa-star"></i>
                                                                     <i class="fas fa-star"></i>
                                                                     <i class="fas fa-star"></i>
                                                                     <i class="fas fa-star"></i>';
-                                                                break;
-                                                            default:
-                                                                echo '  <i class="far fa-star">
+                                                            break;
+                                                        default:
+                                                            echo '  <i class="far fa-star">
                                                                     <i class="far fa-star">
                                                                     <i class="far fa-star">
                                                                     <i class="far fa-star">
                                                                     <i class="far fa-star">';
-                                                                break;
-                                                        }
-                                                        ?>
-                                                    </div>
-                                                    <p>
-                                                        <?php echo $review['content'] ?>
-                                                    </p>
+                                                            break;
+                                                    }
+                                                    ?>
                                                 </div>
+                                                <p>
+                                                    <?php echo $review['content'] ?>
+                                                </p>
                                             </div>
-                                        <?php } ?>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <h4 class="mb-4">Leave a review</h4>
-                                        <form method="POST">
-                                            <div class="d-flex my-3">
-                                                <label for="message">
-                                                    Your Rating * : <i class="fas fa-star"></i>
-                                                    <select name="evaluate" id="">
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                    </select>
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="message">Your Review *</label>
-                                                <textarea id="message" cols="30" rows="5" class="form-control"
-                                                    name="content"></textarea>
-                                            </div>
-                                            <?php
-                                            if (isset($_SESSION['idUser'])) {
-                                                echo '<div class="form-group mb-0">
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4 class="mb-4">Leave a review</h4>
+                                    <form method="POST">
+                                        <div class="d-flex my-3">
+                                            <label for="message">
+                                                Your Rating * : <i class="fas fa-star"></i>
+                                                <select name="evaluate" id="">
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message">Your Review *</label>
+                                            <textarea id="message" cols="30" rows="5" class="form-control"
+                                                name="content"></textarea>
+                                        </div>
+                                        <?php
+                                        if (isset($_SESSION['idUser'])) {
+                                            echo '<div class="form-group mb-0">
                                                     <input type="submit" name="leaveyourreview" value="Leave Your Review"
                                                         class="btn btn-primary px-3">
                                                 </div>';
-                                            } else {
-                                                echo '<a href="login.php" btn px-3 style="background-color: #FFD333; border-color: #FFD333; color:black; padding: 0.5rem 1rem; !important ">Log In</a>';
-                                            }
-                                            ?>
-                                        </form>
-                                        <?php
-                                        if (isset($_POST['leaveyourreview'])) {
-                                            $evaluate = $_POST['evaluate'];
-                                            $content = $_POST['content'];
-                                            $time = isset($_POST["time"]) ? $_POST["time"] : date("Y-m-d");
-                                            $inreview = $getdata->inreview($_SESSION['idUser'], $idProduct, $evaluate, $content, $time);
-                                            ob_start();
-                                            if ($inreview) {
-                                                echo "alert('Success!')";
-                                            } else {
-                                                echo "alert('Fail! Try again')";
-                                            }
-                                            ob_end_flush();
+                                        } else {
+                                            echo '<a href="login.php" btn px-3 style="background-color: #FFD333; border-color: #FFD333; color:black; padding: 0.5rem 1rem; !important ">Log In</a>';
                                         }
                                         ?>
-                                    </div>
+                                    </form>
+                                    <?php
+                                    if (isset($_POST['leaveyourreview'])) {
+                                        $evaluate = $_POST['evaluate'];
+                                        $content = $_POST['content'];
+                                        $time = isset($_POST["time"]) ? $_POST["time"] : date("Y-m-d");
+                                        $inreview = $getdata->inreview($_SESSION['idUser'], $idProduct, $evaluate, $content, $time);
+                                        ob_start();
+                                        if ($inreview) {
+                                            echo "alert('Success!')";
+                                        } else {
+                                            echo "alert('Fail! Try again')";
+                                        }
+                                        ob_end_flush();
+                                    }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -428,10 +346,8 @@
                                     <?php echo $product_may_like['name'] ?>
                                 </a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5>$123.00</h5>
-                                    <h6 class="text-muted ml-2"><del>$
-                                            <?php echo $product_may_like['price'] ?>
-                                        </del></h6>
+                                    <h6 class="text-muted ml-2"><del><?php echo $product_may_like['price'] ?> VND </del></h6>
+                                    <h5>/ <?php echo $product_may_like['price'] ?> VND</h5>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mb-1">
                                     <small class="fa fa-star text-primary mr-1"></small>
@@ -452,80 +368,7 @@
 
 
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-secondary mt-5 pt-5">
-        <div class="row px-xl-5 pt-5">
-            <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-                <h5 class="text-secondary text-uppercase mb-4">Get In Touch</h5>
-                <p class="mb-4">No dolore ipsum accusam no lorem. Invidunt sed clita kasd clita et et dolor sed dolor.
-                    Rebum tempor no vero est magna amet no</p>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
-                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
-            </div>
-            <div class="col-lg-8 col-md-12">
-                <div class="row">
-                    <div class="col-md-4 mb-5">
-                        <h5 class="text-secondary text-uppercase mb-4">Quick Shop</h5>
-                        <div class="d-flex flex-column justify-content-start">
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shop
-                                Detail</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shopping
-                                Cart</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
-                            <a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-5">
-                        <h5 class="text-secondary text-uppercase mb-4">My Account</h5>
-                        <div class="d-flex flex-column justify-content-start">
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shop
-                                Detail</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shopping
-                                Cart</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
-                            <a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-5">
-                        <h5 class="text-secondary text-uppercase mb-4">Newsletter</h5>
-                        <p>Duo stet tempor ipsum sit amet magna ipsum tempor est</p>
-                        <form action="">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Your Email Address">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary">Sign Up</button>
-                                </div>
-                            </div>
-                        </form>
-                        <h6 class="text-secondary text-uppercase mt-4 mb-3">Follow Us</h6>
-                        <div class="d-flex">
-                            <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row border-top mx-xl-5 py-4" style="border-color: rgba(256, 256, 256, .1) !important;">
-            <div class="col-md-6 px-xl-0">
-                <p class="mb-md-0 text-center text-md-left text-secondary">
-                    &copy; <a class="text-primary" href="#">Domain</a>. All Rights Reserved. Designed
-                    by
-                    <a class="text-primary" href="https://htmlcodex.com">HTML Codex</a>
-                    <br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                </p>
-            </div>
-            <div class="col-md-6 px-xl-0 text-center text-md-right">
-                <img class="img-fluid" src="img/payments.png" alt="">
-            </div>
-        </div>
-    </div>
+    <?php include('footer.php') ?>
     <!-- Footer End -->
 
 

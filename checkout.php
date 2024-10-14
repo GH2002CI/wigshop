@@ -28,6 +28,7 @@
 
 <body>
     <?php
+    ob_start();
     session_start();
     include('control.php');
     $getdata = new data();
@@ -58,36 +59,74 @@
 
 
     <!-- Checkout Start -->
-    <form action="" method="post">
+    <form method="post">
         <div class="container-fluid">
             <div class="row px-xl-5">
                 <div class="col-lg-8">
                     <h5 class="section-title position-relative text-uppercase mb-3">
                         <span class="bg-secondary pr-3">Billing Address</span>
                     </h5>
-                    <div class="bg-light p-30 mb-5">
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label>Name</label>
-                                <input class="form-control" type="text" name="name" required placeholder="Doe">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Mobile No</label>
-                                <input class="form-control" type="text" name="phone" required
-                                    placeholder="+123 456 789">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Address</label>
-                                <input class="form-control" type="text" name="address" required
-                                    placeholder="123 Street">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Address Detail</label>
-                                <input class="form-control" type="text" name="address_detail" required
-                                    placeholder="123 Street">
+
+                    <?php
+                    if (isset($_SESSION['idUser']) && $_SESSION['idUser'] == true) {
+                        $get_user = $getdata->getuserbyid($_SESSION['idUser']);
+                        $result = mysqli_fetch_assoc($get_user);
+                        ?>
+                        <div class="bg-light p-30 mb-5">
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label>Name</label>
+                                    <input class="form-control" type="text" name="name" required placeholder="Doe"
+                                        value="<?php echo $result['last_name'] ?>">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Mobile No</label>
+                                    <input class="form-control" type="text" name="phone" required placeholder="+123 456 789"
+                                        value="<?php echo $result['phone'] ?>">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Address</label>
+                                    <input class="form-control" type="text" name="address" required placeholder="123 Street"
+                                        value="<?php echo $result['address'] ?>">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Address Detail</label>
+                                    <input class="form-control" type="text" name="address_detail" required
+                                        placeholder="123 Street">
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <?php
+                    } else {
+                        ?>
+                        <div class="bg-light p-30 mb-5">
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label>Name</label>
+                                    <input class="form-control" type="text" name="name" required placeholder="Doe">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Mobile No</label>
+                                    <input class="form-control" type="text" name="phone" required
+                                        placeholder="+123 456 789">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Address</label>
+                                    <input class="form-control" type="text" name="address" required
+                                        placeholder="123 Street">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Address Detail</label>
+                                    <input class="form-control" type="text" name="address_detail" required
+                                        placeholder="123 Street">
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                    ?>
+
+
 
                     <div class="collapse mb-5" id="shipping-address">
                     </div>
@@ -100,18 +139,31 @@
                     <div class="bg-light p-30 mb-5">
                         <div class="border-bottom">
                             <h6 class="mb-3">Products</h6>
+
                             <?php
                             if (isset($_SESSION['idUser']) && $_SESSION['idUser'] == true) {
-                                $cart = $_POST['cart'];
-                                foreach ($data as $product) {
-                                    foreach (($getdata->get_product($product['id'])) as $pro)
-                                        echo '
-                            <div class="d-flex justify-content-between">
-                                <p>' . $pro['name'] . '</p>
-                                <p>$' . $pro['price'] . '</p>
-                            </div>
-                            ';
+
+                                if (isset($_SESSION['product'])) {
+                                    $se_cart = $getdata->get_product($_SESSION['product']);
+                                } else {
+                                    $se_cart = $getdata->se_cart($_SESSION['idUser']);
+
                                 }
+
+                                $products = [];
+                                $subtotal = 0;
+
+                                foreach ($se_cart as $product) {
+                                    $products[] = $product['id'];
+                                    $subtotal = $subtotal + $product['price'];
+                                    ?>
+                                    <div class="d-flex justify-content-between">
+                                        <p><?php echo $product['name'] ?></p>
+                                        <p><?php echo $product['price'] ?></p>
+                                    </div>
+                                    <?php
+                                }
+
                             } else {
                                 $getproduct = $getdata->get_product($_SESSION['product']);
                                 $result = mysqli_fetch_assoc($getproduct);
@@ -127,17 +179,37 @@
                         <div class="border-bottom pt-3 pb-2">
                             <div class="d-flex justify-content-between mb-3">
                                 <h6>Subtotal</h6>
-                                <h6><?php echo $result['price'] ?> VND</h6>
+                                <h6><?php
+                                if (isset($_SESSION['idUser']) && $_SESSION['idUser'] == true) {
+                                    echo $subtotal;
+                                } else {
+                                    echo $subtotal = $result['price'];
+                                }
+                                ?> VND
+                                </h6>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Shipping</h6>
-                                <h6 class="font-weight-medium">0 VND</h6>
+                                <h6 class="font-weight-medium">
+                                    <?php
+                                    if (isset($_SESSION['idUser']) && $_SESSION['idUser'] == true) {
+
+                                        if (isset($_SESSION['ship'])) {
+                                            echo $ship = $_SESSION['ship'];
+                                        }
+
+                                        echo $ship = 20000;
+                                    } else {
+                                        echo $ship = 20000;
+                                    }
+                                    ?> VND
+                                </h6>
                             </div>
                         </div>
                         <div class="pt-2">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5>Total</h5>
-                                <h5><?php echo $result['price'] ?> VND</h5>
+                                <h5><?php echo $total_money = $subtotal + $ship ?> VND</h5>
                             </div>
                         </div>
                     </div>
@@ -152,15 +224,38 @@
     </form>
     <?php
     if (isset($_POST['buy'])) {
+
         if (isset($_SESSION['idUser']) && $_SESSION['idUser'] == true) {
 
-        } else {
             $placeorder = $getdata->place_order(
                 $_POST['name'],
                 $_POST['phone'],
                 $_POST['address'] . $_POST['address_detail'],
-                $_SESSION['product']
+                $products,
+                $total_money
             );
+
+            unset($_SESSION['cart']);
+            unset($_SESSION['subtotal']);
+            unset($_SESSION['ship']);
+
+            if (!isset($_SESSION['product'])) {
+                $getdata->del_cart($_SESSION['idUser']);
+            }
+
+
+            header("Location: index.php");
+        } else {
+            $products[] = $_SESSION['product'];
+
+            $placeorder = $getdata->place_order(
+                $_POST['name'],
+                $_POST['phone'],
+                $_POST['address'] . $_POST['address_detail'],
+                $products,
+                $total_money
+            );
+
             unset($_SESSION['product']);
             ?>
             <script>
@@ -170,6 +265,7 @@
             <?php
         }
     }
+    ob_end_flush();
     ?>
     <!-- Checkout End -->
 

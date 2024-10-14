@@ -10,10 +10,10 @@ class data
         $run = mysqli_query($conn, $sql);
         return $run;
     }
-    function incart($idUser, $idProduct, $size, $color, $quantity)
+    function incart($idUser, $idProduct)
     {
         global $conn;
-        $sql = "INSERT INTO cart (idUser, idProduct, size, color, quantity) VALUES ('$idUser', '$idProduct', '$size', '$color', '$quantity')";
+        $sql = "INSERT INTO cart (idUser, idProduct) VALUES ('$idUser', '$idProduct')";
         $run = mysqli_query($conn, $sql);
         return $run;
     }
@@ -30,14 +30,18 @@ class data
         $run = mysqli_query($conn, $sql);
         return $run;
     }
-    function place_order($name, $phone, $address, $product){
+    function place_order($name, $phone, $address, $products, $total){
         global $conn;
-        $sql = "INSERT INTO order_product (name, phone, address) VALUES ('$name', '$phone', '$address')";
+        $sql = "INSERT INTO order_product (name, phone, address, status, total_money) VALUES ('$name', '$phone', '$address', 1, '$total')";
         $conn->query($sql);
         $last_id = $conn->insert_id;
-        $sql2 = "INSERT INTO order_detail (idorder, idProduct) values ('$last_id', '$product')";
-        $run = $conn->query($sql2);
-        $conn->commit();   
+        foreach ($products as $idproduct)
+        {
+            $sql2 = "INSERT INTO order_detail (idorder, idProduct) values ('$last_id', '$idproduct')";
+            $run = $conn->query($sql2);
+            $conn->commit(); 
+        }
+          
         return $run;
     }
     //SELECT
@@ -94,7 +98,7 @@ class data
     function se_cart($idUser)
     {
         global $conn;
-        $sql = "SELECT * FROM cart WHERE idUser = '$idUser'";
+        $sql = "SELECT * FROM cart, product WHERE cart.idUser = '$idUser' and cart.idProduct=product.id";
         $run = mysqli_query($conn, $sql);
         return $run;
     }
@@ -165,6 +169,12 @@ class data
     function del_favorite ($idProduct, $idUser){
         global $conn;
         $sql = "DELETE FROM favorite WHERE idProduct = '$idProduct' AND idUser = '$idUser'";
+        $run = mysqli_query($conn, $sql);
+        return $run;
+    }
+    function del_cart ($idUser){
+        global $conn;
+        $sql = "DELETE FROM cart WHERE idUser = '$idUser'";
         $run = mysqli_query($conn, $sql);
         return $run;
     }

@@ -63,10 +63,7 @@
                                         <th>Cover</th>
                                         <th>Name</th>
                                         <th>Price</th>
-                                        <th>Color</th>
-                                        <th>Size</th>
                                         <th>Category</th>
-                                        <th>Total</th>
                                         <th>Time</th>
                                         <th>Star</th>
                                         <th>Number Sell</th>
@@ -84,10 +81,7 @@
                                             </td>
                                             <td><?php echo $product['name'] ?></td>
                                             <td><?php echo $product['price'] ?></td>
-                                            <td><?php echo $product['color'] ?></td>
-                                            <td><?php echo $product['size'] ?></td>
                                             <td><?php echo $product['category'] ?></td>
-                                            <td><?php echo $product['number'] ?></td>
                                             <td><?php echo $product['date'] ?></td>
                                             <td><?php echo $product['star'] ?></td>
                                             <td><?php echo $product['number_sell'] ?></td>

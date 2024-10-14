@@ -34,6 +34,7 @@
         <!-- /. NAV TOP  -->
         <?php include('menu.php') ?>
         <!-- /. NAV SIDE  -->
+        
         <div id="page-wrapper">
             <div id="page-inner">
                 <div class="row">
@@ -160,8 +161,7 @@
                         <br />
                         <!-- 16:9 aspect ratio -->
                         <div class="embed-responsive embed-responsive-16by9">
-                            <iframe class="embed-responsive-item"
-                                src="//www.youtube.com/embed/zpOULjyy-n8?rel=0"></iframe>
+
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -174,50 +174,42 @@
                                 <div class="list-group">
 
                                     <a href="#" class="list-group-item">
-                                        class="fa fa-twitter fa-fw"><3 New Followers <span
-                                            class="pull-right text-muted small"><em>12 minutes ago</em>
-                                            </span>
+                                        class="fa fa-twitter fa-fw">3 New Followers
+                                        <span class="pull-right text-muted small"><em>12 minutes ago</em></span>
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        class="fa fa-envelope fa-fw"><Message Sent <span
-                                            class="pull-right text-muted small"><em>27 minutes ago</em>
-                                            </span>
+                                        class="fa fa-envelope fa-fw">Message Sent
+                                        <span class="pull-right text-muted small"><em>27 minutes ago</em></span>
                                     </a>
                                     <a href="#" class="list-group-item">
                                         New Task
-                                        <span class="pull-right text-muted small"><em>43 minutes ago</em>
-                                        </span>
+                                        <span class="pull-right text-muted small"><em>43 minutes ago</em></span>
                                     </a>
                                     <a href="#" class="list-group-item">
                                         Server Rebooted
-                                        <span class="pull-right text-muted small"><em>11:32 AM</em>
-                                        </span>
+                                        <span class="pull-right text-muted small"><em>11:32 AM</em></span>
                                     </a>
                                     <a href="#" class="list-group-item">
                                         Server Crashed!
-                                        <span class="pull-right text-muted small"><em>11:13 AM</em>
-                                        </span>
+                                        <span class="pull-right text-muted small"><em>11:13 AM</em></span>
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        class="fa fa-warning fa-fw"><Server Not Responding <span
-                                            class="pull-right text-muted small"><em>10:57 AM</em>
-                                            </span>
+                                        class="fa fa-warning fa-fw">Server Not Responding
+                                        <span class="pull-right text-muted small"><em>10:57 AM</em></span>
                                     </a>
-
                                     <a href="#" class="list-group-item">
                                         Server Crashed!
-                                        <span class="pull-right text-muted small"><em>11:13 AM</em>
-                                        </span>
+                                        <span class="pull-right text-muted small"><em>11:13 AM</em></span>
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        class="fa fa-warning fa-fw"><Server Not Responding <span
-                                            class="pull-right text-muted small"><em>10:57 AM</em>
-                                            </span>
+                                        class="fa fa-warning fa-fw">
+                                        Server Not Responding
+                                        <span class="pull-right text-muted small"><em>10:57 AM</em></span>
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        class="fa fa-shopping-cart fa-fw"><New Order Placed <span
-                                            class="pull-right text-muted small"><em>9:49 AM</em>
-                                            </span>
+                                        class="fa fa-shopping-cart fa-fw">
+                                        New Order Placed
+                                        <span class="pull-right text-muted small"><em>9:49 AM</em></span>
                                     </a>
                                 </div>
                                 <!-- /.list-group -->

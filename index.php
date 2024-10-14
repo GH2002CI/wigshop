@@ -222,11 +222,10 @@
                                 src="bs-advance-admin/advance-admin/img/<?php echo $topProduct['image'] ?>" alt="">
                             <div class="product-action">
                                 <a class="btn btn-outline-dark btn-square"
-                                    href="detail.php?idProduct=<?php echo $topProduct['id'] ?>"><i
-                                        class="fa fa-shopping-cart"></i></a>
+                                    href="detail.php?idProduct=<?php echo $topProduct['id'] ?>">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </a>
                                 <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                <!-- <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a> -->
                             </div>
                         </div>
                         <div class="text-center py-4">
@@ -234,8 +233,8 @@
                                 <?php echo $topProduct['name'] ?>
                             </a>
                             <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>$
-                                    <?php echo $topProduct['price'] ?>
+                                <h5>
+                                    <?php echo $topProduct['price'] ?>VND
                                 </h5>
                                 <h6 class="text-muted ml-2"><del>$
                                         <?php echo $topProduct['price'] ?>

@@ -24,6 +24,7 @@ class dataadmin
         $run = mysqli_query($conn, $sql);
         return $run;
     }
+
     //SELECT
     function se_product()
     {
@@ -67,6 +68,14 @@ class dataadmin
         $run = mysqli_query($conn, $sql);
         return $run;
     }
+    function se_order($status)
+    {
+        global $conn;
+        $sql = "SELECT * from order_product where `status`='$status'";
+        $run = mysqli_query($conn, $sql);
+        return $run;
+    }
+
     //GET
     function get_product($idProduct)
     {
@@ -139,6 +148,17 @@ class dataadmin
         $sql = "DELETE FROM product WHERE id = '$id'";
         $run = mysqli_query($conn, $sql);
         return $run;
+    }
+    function process_order($id, $state)
+    {
+        global $conn;
+        $sql = "UPDATE `order_product` SET status=? WHERE id=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $state, $id);
+        if ($stmt->execute()) {
+            $conn->commit();
+        }
+        $stmt->close();
     }
 }
 ?>
